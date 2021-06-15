@@ -5,69 +5,68 @@
 | Column             | Type       | Options     |
 | ------------------ | ---------- | ----------- |
 | nickname           | string     | null: false |
-| email              | string     | null: false |
-| password           | string     | null: false |
+| email              | string     | null: false, unique: true |
+| encrypted_password | string     | null: false |
 | family_name        | string     | null: false |
 | first_name         | string     | null: false |
 | family_name_kana   | string     | null: false |
 | first_name_kana    | string     | null: false |
-| destination        | string     | null: false |
-| birthday           | YYYY-MM-DD | null: false |
+| birthday           | date       | null: false |
 
 ### Association
 
-- belongs_to :item
+- has_many :item
 - has_one :histories
 
 
 ## items テーブル
 
-| Column           | Type       | Options                        |
-|----------------- | ---------- | ------------------------------ |
-| image            | string     | null: false                    |
-| name             | string     | null: false                    |
-| description      | text       | null: false                    |
-| category         | string     | null: false                    |
-| status           | string     | null: false                    |
-| shipping_changes | string     | null: false                    |
-| area             | string     | null: false                    |     
-| days_to_ship     | integer    | null: false                    | 
-| price            | string     | null: false                    |
-| fee              | integer    | null: false                    |
-| profit           | integer    | null: false                    |
-| user_id          | references | null: false, foreign_key: true |
+| Column             | Type       | Options                        |
+|------------------- | ---------- | ------------------------------ |
+| name               | string     | null: false                    |
+| description        | text       | null: false                    |
+| category_id        | integer    | null: false                    |
+| status_id          | integer    | null: false                    |
+| shipping_change_id | integer    | null: false                    |
+| area_id            | integer    | null: false                    |     
+| days_to_ship_id    | integer    | null: false                    | 
+| price              | integer    | null: false                    |
+| fee                |            | null: false                    |
+| profit             |            | null: false                    |
+| user               | references | null: false, foreign_key: true |
 
 
 ### Association
 
 - belongs_to :user
-- belongs_to :destination
-- has_one :history
+- has_many :history
 
 
 ## destination テーブル
 
-| Column        | Type   | Options                        |
-| ------------- | ------ | ------------------------------ |
-| post_number   | string | null: false                    |
-| prefecture    | string | null: false                    |
-| city          | string | null: false                    |
-| address       | string | null: false                    |
-| building_name | string |                                |
-| phone_number  | string | null: false                    |
-| user_id       | string | null: false, foreign_key: true |
+| Column        | Type      | Options                        |
+| ------------- | --------- | ------------------------------ |
+| post_number   | string    | null: false                    |
+| area_id       | integer   | null: false                    |
+| city          | string    | null: false                    |
+| address       | string    | null: false                    |
+| building_name | string    |                                |
+| phone_number  | string    | null: false                    |
+| user_id       | integer   | null: false, foreign_key: true |
+| history       | references| null: false, foreign_key: true |
 
 
 ### Association
 
-- belongs_to :item
+- belongs_to :history
 
 ## historyテーブル
 
-| Column        | Type       | Options                        |
-| ------------- | ---------- | ------------------------------ |
-|user_id        | references | null: false, foreign_key: true |
-|item_id        | references | null: false, foreign_key: true |
+| Column | Type       | Options                        |
+| ------ | ---------- | ------------------------------ |
+|user    | references | null: false, foreign_key: true |
+|item    | references | null: false, foreign_key: true |
 
 - belongs_to :user
 - belongs_to :item
+- has_one :destination
