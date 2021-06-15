@@ -15,8 +15,8 @@
 
 ### Association
 
-- has_many :item
-- has_one :histories
+- has_many :items
+- has_many :histories
 
 
 ## items テーブル
@@ -31,15 +31,13 @@
 | area_id            | integer    | null: false                    |     
 | days_to_ship_id    | integer    | null: false                    | 
 | price              | integer    | null: false                    |
-| fee                |            | null: false                    |
-| profit             |            | null: false                    |
 | user               | references | null: false, foreign_key: true |
 
 
 ### Association
 
 - belongs_to :user
-- has_many :history
+- has_one :history
 
 
 ## destination テーブル
@@ -52,7 +50,6 @@
 | address       | string    | null: false                    |
 | building_name | string    |                                |
 | phone_number  | string    | null: false                    |
-| user_id       | integer   | null: false, foreign_key: true |
 | history       | references| null: false, foreign_key: true |
 
 
