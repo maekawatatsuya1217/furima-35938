@@ -22,13 +22,14 @@ class Item < ApplicationRecord
       validates :price
     end
 
-    validates :category_id, numericality: { other_than: 1 }
-    validates :status_id, numericality: { other_than: 1 }
-    validates :shipping_change_id, numericality: { other_than: 1 }
-    validates :area_id, numericality: { other_than: 1 }
-    validates :days_to_ship_id, numericality: { other_than: 1 }
-    validates :price, format: { with: /\A[0-9]+\z/ }
-    validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
-    
+    with_options numericality: { other_than: 1 } do
+      validates :category_id
+      validates :status_id
+      validates :shipping_change_id
+      validates :area_id
+      validates :days_to_ship_id
+    end
+      validates :price, format: { with: /\A[0-9]+\z/ }
+      validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
 
 end
