@@ -1,13 +1,13 @@
 FactoryBot.define do
   factory :item do
-    name {'オムライス'}
-    description {'美味しいですよ！'}
-    category_id {2}
-    status_id {2}
-    shipping_change_id {2}
-    area_id {2}
-    days_to_ship_id {2}
-    price {1000}
+    name { 'オムライス' }
+    description { '美味しいですよ！' }
+    category_id { 2 }
+    status_id { 2 }
+    shipping_change_id { 2 }
+    area_id { 2 }
+    days_to_ship_id { 2 }
+    price { 1000 }
 
     association :user
 

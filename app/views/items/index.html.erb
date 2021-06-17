@@ -126,6 +126,7 @@
     <div class="subtitle" >
       新規投稿商品
     </div>
+    <% if @items.length != 0 %>
     <ul class='item-lists'>
      <% @items.each do |item| %>
       <li class='list'>
@@ -154,7 +155,8 @@
         </div>
         <% end %>
       </li>
-    <% if item.image = nil %>
+      <% end %>
+    <% else %>
       <li class='list'>
         <%= link_to '#' do %>
         <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
@@ -172,7 +174,6 @@
         </div>
         <% end %>
       </li>
-    <% end %>
     <% end %>
     </ul>
   </div>
