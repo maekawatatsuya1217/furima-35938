@@ -47,12 +47,14 @@ RSpec.describe User, type: :model do
     it 'passwordは数字のみでは登録できないこと' do
       @user.password = '111111'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password には英字と数字の両方を含めて設定してください")
+      expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password",
+                                                    'Password には英字と数字の両方を含めて設定してください')
     end
     it 'passwordは全角では登録できない' do
       @user.password = 'ccc１１１'
       @user.valid?
-      expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password", "Password には英字と数字の両方を含めて設定してください")
+      expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password",
+                                                    'Password には英字と数字の両方を含めて設定してください')
     end
     it 'お名前(全角)は、名字と名前がそれぞれ必須であること' do
       @user.first_name = ''
@@ -67,7 +69,7 @@ RSpec.describe User, type: :model do
     it 'first_nameは全角（漢字・ひらがな・カタカナ）での入力が必須であること' do
       @user.first_name = 'a'
       @user.valid?
-      expect(@user.errors.full_messages).to include("First name is invalid")
+      expect(@user.errors.full_messages).to include('First name is invalid')
     end
     it 'お名前カナ(全角)は、名字と名前がそれぞれ必須であること' do
       @user.first_name_kana = ''
