@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
 
+    before_action :sold_out_item, only: [:index]
     before_action :set_item, only: [:index, :create]
 
     def index
@@ -31,4 +32,9 @@ class OrdersController < ApplicationController
     def donation_params
     params.require(:donation_address).permit(:post_number , :area_id , :city , :address , :building_name , :phone_number).merge(user_id: current_user.id, item_id: params[:item_id]).merge(token: params[:token])
     end
+
+    def sold_out_item
+      redirect_to root_path if @item.present?
+    end
+
 end
