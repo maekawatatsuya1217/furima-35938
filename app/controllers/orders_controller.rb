@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_item, only: [:index, :create]
-  before_action :sold_out_item, only: [:index, :create]
+  before_action :set_item
+  before_action :sold_out_item
 
   def index
     @donation_address = DonationAddress.new
@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
       @donation_address.save
       redirect_to root_path
     else
-      render :'orders/index'
+      render :index
     end
   end
 
