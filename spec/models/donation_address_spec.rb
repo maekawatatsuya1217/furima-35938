@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe DonationAddress, type: :model do
   describe '商品購入機能の実装' do
     before do
-      @donation_address = FactoryBot.build(:donation_address)
+      user = FactoryBot.create(:user)
+      item = FactoryBot.create(:item)
+      @donation_address = FactoryBot.build(:donation_address, user_id: user.id, item_id: item.id)
+      sleep(1)
     end
 
     context '保存できるとき' do
@@ -48,12 +51,12 @@ RSpec.describe DonationAddress, type: :model do
         expect(@donation_address.errors.full_messages).to include("Phone number can't be blank", 'Phone number is invalid')
       end
       it '電話番号は,9桁以内の半角数値では保存できないこと' do
-        @donation_address.phone_number = 111_111_111
+        @donation_address.phone_number = 111111111
         @donation_address.valid?
         expect(@donation_address.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号は12桁以上の半角数値では保存できないこと' do
-        @donation_address.phone_number = 111_111_111_111
+        @donation_address.phone_number = 111111111111
         @donation_address.valid?
         expect(@donation_address.errors.full_messages).to include('Phone number is invalid')
       end
@@ -61,6 +64,16 @@ RSpec.describe DonationAddress, type: :model do
         @donation_address.token = ''
         @donation_address.valid?
         expect(@donation_address.errors.full_messages).to include("Token can't be blank")
+      end
+      it 'user_idが空では登録できないこと' do
+        @donation_address.user_id = ''
+        @donation_address.valid?
+        expect(@donation_address.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_idが空では登録できないこと' do
+        @donation_address.item_id = ''
+        @donation_address.valid?
+        expect(@donation_address.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
