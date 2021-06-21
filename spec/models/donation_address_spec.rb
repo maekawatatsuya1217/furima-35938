@@ -35,6 +35,11 @@ RSpec.describe DonationAddress, type: :model do
         @donation_address.valid?
         expect(@donation_address.errors.full_messages).to include("Area can't be blank")
       end
+      it '都道府県のidが1だと保存できないこと' do
+        @donation_address.area_id = 1
+        @donation_address.valid?
+        expect(@donation_address.errors.full_messages).to include("Area must be other than 1")
+      end
       it '市区町村が必須であること' do
         @donation_address.city = ''
         @donation_address.valid?
@@ -57,6 +62,16 @@ RSpec.describe DonationAddress, type: :model do
       end
       it '電話番号は12桁以上の半角数値では保存できないこと' do
         @donation_address.phone_number = 111111111111
+        @donation_address.valid?
+        expect(@donation_address.errors.full_messages).to include('Phone number is invalid')
+      end
+      it '電話番号が半角数字のみでないと登録できないこと（英字混合だと登録できないこと）' do
+        @donation_address.phone_number = 'aaaaa11111'
+        @donation_address.valid?
+        expect(@donation_address.errors.full_messages).to include('Phone number is invalid')
+      end
+      it '全角数字だと登録できないこと' do
+        @donation_address.phone_number = '１１１１１１１１１１'
         @donation_address.valid?
         expect(@donation_address.errors.full_messages).to include('Phone number is invalid')
       end
