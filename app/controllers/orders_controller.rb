@@ -10,12 +10,7 @@ class OrdersController < ApplicationController
   def create
     @donation_address = DonationAddress.new(donation_params)
     if @donation_address.valid?
-      Payjp.api_key = ENV['PAYJP_SECRET_KEY']
-      Payjp::Charge.create(
-        amount: @item.price,
-        card: donation_params[:token],
-        currency: 'jpy'
-      )
+      pay_jp
       @donation_address.save
       redirect_to root_path
     else
@@ -37,5 +32,14 @@ class OrdersController < ApplicationController
 
   def sold_out_item
     redirect_to root_path if @item.history.present? || current_user.id == @item.user_id
+  end
+
+  def pay_jp
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+      Payjp::Charge.create(
+        amount: @item.price,
+        card: donation_params[:token],
+        currency: 'jpy'
+    )
   end
 end
