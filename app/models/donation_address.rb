@@ -1,6 +1,6 @@
 class DonationAddress
     include ActiveModel::Model
-    attr_accessor :post_number, :area_id, :city, :address, :building_name, :phone_number, :history, :token, :user_id, :item_id
+    attr_accessor :post_number, :area_id, :city, :address, :building_name, :phone_number, :history, :token, :user_id, :item_id, :token
 
     with_options presence: true do
         validates :post_number, format: { with: /\A\d{3}[-]\d{4}\z/ }
