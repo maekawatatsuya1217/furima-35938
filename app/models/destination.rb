@@ -1,3 +1,3 @@
 class Destination < ApplicationRecord
-    belongs_to :history
+  belongs_to :history
 end

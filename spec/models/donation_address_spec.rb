@@ -23,9 +23,9 @@ RSpec.describe DonationAddress, type: :model do
         expect(@donation_address.errors.full_messages).to include("Post number can't be blank")
       end
       it '郵便番号は、「3桁ハイフン4桁」の半角文字列のみ保存可能なこと' do
-        @donation_address.post_number = 1111111
+        @donation_address.post_number = 1_111_111
         @donation_address.valid?
-        expect(@donation_address.errors.full_messages).to include("Post number is invalid")
+        expect(@donation_address.errors.full_messages).to include('Post number is invalid')
       end
       it '都道府県が必須であること' do
         @donation_address.area_id = ''
@@ -45,17 +45,17 @@ RSpec.describe DonationAddress, type: :model do
       it '電話番号が必須であること' do
         @donation_address.phone_number = ''
         @donation_address.valid?
-        expect(@donation_address.errors.full_messages).to include("Phone number can't be blank", "Phone number is invalid")
+        expect(@donation_address.errors.full_messages).to include("Phone number can't be blank", 'Phone number is invalid')
       end
       it '電話番号は,9桁以内の半角数値では保存できないこと' do
-        @donation_address.phone_number = 111111111
+        @donation_address.phone_number = 111_111_111
         @donation_address.valid?
-        expect(@donation_address.errors.full_messages).to include("Phone number is invalid")
+        expect(@donation_address.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号は12桁以上の半角数値では保存できないこと' do
-        @donation_address.phone_number = 111111111111
+        @donation_address.phone_number = 111_111_111_111
         @donation_address.valid?
-        expect(@donation_address.errors.full_messages).to include("Phone number is invalid")
+        expect(@donation_address.errors.full_messages).to include('Phone number is invalid')
       end
       it 'tokenが空では購入できないこと' do
         @donation_address.token = ''
