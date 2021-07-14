@@ -36,22 +36,22 @@ RSpec.describe User, type: :model do
     it 'パスワードは、6文字以上での入力が必須であること' do
       @user.password = 'aaa11'
       @user.valid?
-      expect(@user.errors.full_messages).to include('パスワード（確認用）とパスワードの入力が一致しません')
+      expect(@user.errors.full_messages).to include('パスワードは6文字以上で入力してください')
     end
     it 'パスワードは、半角英数字混合での入力が必須であること' do
       @user.password = 'aaaaaa'
       @user.valid?
-      expect(@user.errors.full_messages).to include('パスワード（確認用）とパスワードの入力が一致しません')
+      expect(@user.errors.full_messages).to include('パスワードには半角の英字と数字の両方を含めて設定してください')
     end
     it 'passwordは数字のみでは登録できないこと' do
       @user.password = '111111'
       @user.valid?
-      expect(@user.errors.full_messages).to include('パスワード（確認用）とパスワードの入力が一致しません')
+      expect(@user.errors.full_messages).to include('パスワードには半角の英字と数字の両方を含めて設定してください')
     end
     it 'passwordは全角では登録できない' do
       @user.password = 'ccc１１１'
       @user.valid?
-      expect(@user.errors.full_messages).to include('パスワード（確認用）とパスワードの入力が一致しません')
+      expect(@user.errors.full_messages).to include('パスワードには半角の英字と数字の両方を含めて設定してください')
     end
     it 'お名前(全角)は、名字と名前がそれぞれ必須であること' do
       @user.first_name = ''
