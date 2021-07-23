@@ -43,6 +43,10 @@ class ItemsController < ApplicationController
     end
   end
 
+  def search
+    @results = @p.result.includes(:category_id)
+  end
+
   private
 
   def item_params
@@ -56,5 +60,9 @@ class ItemsController < ApplicationController
 
   def unless
     redirect_to root_path if @item.history.present? || current_user.id != @item.user_id
+  end
+
+  def search_product
+    @p = Item.ransack(params[:q])
   end
 end
