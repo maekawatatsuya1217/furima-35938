@@ -46,6 +46,8 @@ class ItemsController < ApplicationController
 
   def search
     @results = @p.result.includes(:category_id)
+    @q = Item.ransack(params[:q])
+    @items = @q.result
   end
 
   private
