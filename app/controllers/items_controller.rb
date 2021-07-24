@@ -6,6 +6,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all.order('created_at DESC')
+    set_item_column
   end
 
   def new
@@ -48,6 +49,11 @@ class ItemsController < ApplicationController
     @results = @p.result.includes(:category_id)
     @q = Item.ransack(params[:q])
     @items = @q.result
+    set_item_column
+  end
+
+  def research
+    @tweets = Tweet.search(params[:keyword])
   end
 
   private
@@ -67,5 +73,9 @@ class ItemsController < ApplicationController
 
   def search_item
     @p = Item.ransack(params[:q])
+  end
+
+  def set_item_column
+    @item_name = Item.select("name").distinct
   end
 end
