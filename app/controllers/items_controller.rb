@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :unless, only: [:edit, :update, :destroy]
-  before_action :search_item, only: [:index, :search]
+  before_action :search_item, only: [:index, :search, :show]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -46,15 +46,7 @@ class ItemsController < ApplicationController
   end
 
   def search
-    @results = @p.result.includes(:category_id)
-    @q = Item.ransack(params[:q])
-    @items = @q.result
-    set_item_column
-  end
-
-  def research
-    @items = Item.research(params[:keyword])
-    @p = Item.ransack(params[:q])
+    @items = @p.result
     set_item_column
   end
 
