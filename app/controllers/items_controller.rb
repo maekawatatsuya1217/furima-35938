@@ -2,9 +2,11 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :unless, only: [:edit, :update, :destroy]
+  before_action :search_item, only: [:index, :search, :show]
 
   def index
     @items = Item.all.order('created_at DESC')
+    set_item_column
   end
 
   def new
@@ -43,6 +45,11 @@ class ItemsController < ApplicationController
     end
   end
 
+  def search
+    @items = @p.result
+    set_item_column
+  end
+
   private
 
   def item_params
@@ -56,5 +63,13 @@ class ItemsController < ApplicationController
 
   def unless
     redirect_to root_path if @item.history.present? || current_user.id != @item.user_id
+  end
+
+  def search_item
+    @p = Item.ransack(params[:q])
+  end
+
+  def set_item_column
+    @item_name = Item.select("name").distinct
   end
 end
