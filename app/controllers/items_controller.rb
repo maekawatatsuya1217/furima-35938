@@ -53,7 +53,9 @@ class ItemsController < ApplicationController
   end
 
   def research
-    @tweets = Tweet.search(params[:keyword])
+    @items = Item.research(params[:keyword])
+    @p = Item.ransack(params[:q])
+    set_item_column
   end
 
   private
