@@ -45,6 +45,10 @@
   width: 100%;
 }
 
+#q_name_eq{
+  margin-right: 20px;
+}
+
 .nav {
   font-size: 18px;
   display: flex;
